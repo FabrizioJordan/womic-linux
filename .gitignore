@@ -1,0 +1,5 @@
+micclient-*
+.vscode
+.vscode/*
+*.swp
+*.AppImage
