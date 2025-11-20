@@ -1,11 +1,13 @@
 # womic-linux
 🇬🇧 Bash script for running WO Mic on Linux and connect it with your phone
 
-/// ///
+///
 
 🇪🇸 Script de Bash para el uso de WO Mic en Linux y conectarlo con tu teléfono
 
-## 🇬🇧 English
+---
+
+### 🇬🇧 English
 <details>
   <summary>Click to expand</summary>
 
@@ -33,13 +35,13 @@ OPTIONS:
 `-w` - to connect via WiFi\
 `-k` - to disconnect\
 `-h` - to show this help message\
-`-u` - to show 'how to use' help message (like a User Manual)
+`-u` - to show the user manual
 
 </details>
 
 ---
 
-## 🇪🇸 Español
+### 🇪🇸 Español
 <details>
   <summary>Haz clic para expandir</summary>
 
@@ -55,12 +57,12 @@ Luego de descargarlo, mueve el archivo AppImage al mismo directorio donde se enc
 
 ## Cómo usarlo
 
-Mantiene el script en el mismo directorio que el WO Mic AppImage y luego ejecuta el script así:
+Guarda el script en el mismo directorio que el AppImage de WO Mic y luego ejecuta el script así:
 ```
-$ ./womic.sh [OPTION]
+$ ./womic.sh [OPCION]
 ```
 
-OPCIONES:
+POSIBLES OPCIONES:
 
 `-b` - para conectarse vía Bluetooth\
 `-w` - para conectarse vía WiFi\
