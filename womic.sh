@@ -1,13 +1,14 @@
 #!/bin/bash
 
 function display_help() {
-echo "Usage: womic [OPTIONS]"
-    echo "Options:"
-    echo "   -b   - to connect via Bluetooth"
-    echo "   -w   - to connect via WiFi"
-    echo "   -k   - to disconnect"
-    echo "   -h   - help (this message)"
-    echo "   -u   - how to Use (like User Manual)"
+	echo "Usage: womic [OPTIONS]"
+    	echo "OPTIONS:"
+    	echo "   -b   - to connect via Bluetooth"
+    	echo "   -w   - to connect via WiFi"
+    	echo "   -d   - to disconnect"
+    	echo "   -h   - help (this message)"
+    	echo "   -u   - how to Use (like User Manual)"
+       	echo "   -i   - to install WO Mic executable (AppImage)"
 }
 
 if [ $# -eq 0 ]; then
@@ -15,13 +16,29 @@ if [ $# -eq 0 ]; then
      	exit 1
 fi
 
-if [ `ls | grep ^micclient-x86_64.*$` ]; then
-    MICCLIENT=$(ls | grep ^micclient-x86_64.*$)
-else
-    printf "WO Mic Appimage binary not found! Would you like to download it now? (y/n): "
-    read INPUT
 
-    if [ "$INPUT" == "y" ]; then
+if [ `ls | grep ^micclient-x86_64.*$` ]; then
+	    MICCLIENT=$(ls | grep ^micclient-x86_64.*$)
+	else
+	    printf "WO Mic Appimage binary not found! Would you like to download it now? (y/n): "
+	    read INPUT
+
+	    if [ "$INPUT" == "y" ]; then
+		download_executable
+	    else
+	        printf "\nThe WO Mic Appimage binary is required in order for the script to function.\n"
+	        printf "Either re-run the script and choose \"y\" to download the binary automatically or download it manually according to the README file.\n"
+	        exit 1
+	    fi
+	fi
+
+function executable_check() {
+	if ! [ -x $MICCLIENT ]; then
+	    chmod +x $MICCLIENT
+	fi
+}
+
+function download_executable() {
         printf "\n"
         wget -q --show-progress https://wolicheng.com/womic/softwares/micclient-x86_64.AppImage
 
@@ -30,17 +47,6 @@ else
         fi
 
         printf "\n"
-    else
-        printf "\nThe WO Mic Appimage binary is required in order for the script to function.\n"
-        printf "Either re-run the script and choose \"y\" to download the binary automatically or download it manually according to the README file.\n"
-        exit 1
-    fi
-fi
-
-function executable_check() {
-    if ! [ -x $MICCLIENT ]; then
-        chmod +x $MICCLIENT
-    fi
 }
 
 function module_check() {
@@ -87,24 +93,24 @@ function how_to_use() {
 			exit 0
 		;;
 		c)
-		 echo -e "\nHow to use the app / How to connect your devices:"
-		 echo -e "\nFirst, in your phone: "
-		 echo -e " Open your WO Mic app"
-		 echo -e " Connect your devices via Bluetooth or Wi-Fi"
-		 echo -e " Click on the top button to start app to 'wait for connection'"
-		 echo -e "Then, on your computer: "
-		 echo -e " Run this script using '-b' (Bluetooth) or '-w' (for Wi-Fi)"
-		 exit 0
+			echo -e "\nHow to use the app / How to connect your devices:"
+			echo -e "\nFirst, in your phone: "
+			echo -e " Open your WO Mic app"
+			echo -e " Connect your devices via Bluetooth or Wi-Fi"
+			echo -e " Click on the top button to start app to 'wait for connection'"
+			echo -e "Then, on your computer: "
+			echo -e " Run this script using '-b' (Bluetooth) or '-w' (for Wi-Fi)"
+		 	exit 0
 		;;
 		*)
-		 echo -e "\n Invalid option. Please run again and choose a valid one.\n"
-		 exit 1
+		 	echo -e "\nInvalid option. Please run again and choose a valid one.\n"
+		 	exit 1
 		 ;;
 	esac
 	exit 0
 }
 
-while getopts "hbwku" OPTION; do
+while getopts "hbwkui" OPTION; do
     case $OPTION in
         h)
          display_help
@@ -119,12 +125,11 @@ while getopts "hbwku" OPTION; do
                 module_check
 
                 printf "If you want to know where is your Bluetooth address, execute this script with '-u'"
-
-                printf "\n\n(Format: xx:xx:xx:xx:xx:xx)\n"
+                printf "\n\n (Format: xx:xx:xx:xx:xx:xx)\n"
                 printf "Enter device address: "
                 read ADDRESS
-                echo ""
-                printf "Run 'womic -k' to disconnect\n\n"
+
+                printf "\nRun 'womic -k' to disconnect\n\n"
                 ./$MICCLIENT -t Bluetooth $ADDRESS &
                 sleep 3
          fi
@@ -139,11 +144,11 @@ while getopts "hbwku" OPTION; do
 
                 printf "If you want to know where is your Wi-Fi address, execute this script with '-u'"
 
-                printf "\n\n(Example: 192.168.0.100)\n"
+                printf "\n\n (Example: 192.168.0.100)\n"
                 printf "Enter device IP: "
                 read IP
-                echo ""
-                printf "Run 'womic -k' to disconnect\n\n"
+
+                printf "\nRun 'womic -k' to disconnect\n\n"
                 ./$MICCLIENT -t Wifi $IP &
                 sleep 3
          fi
@@ -162,9 +167,12 @@ while getopts "hbwku" OPTION; do
 	 how_to_use
 	 exit 0
 	 ;;
+	i)
+	 download_executable
+	 exit 0
+	 ;;
         *)
-	 echo ""
-         echo "Run 'womic -h' for help or 'womic -u' for the user manual"
+         echo "\nRun 'womic -h' for help or 'womic -u' for the user manual"
          exit 0
          ;;
     esac
