@@ -35,13 +35,14 @@ OPTIONS:
 `-w` - to connect via WiFi\
 `-k` - to disconnect\
 `-h` - to show this help message\
-`-u` - to show the user manual
+`-u` - to show the user manual\
+`-i` - to install WO Mic AppImage
+
+
 
 > 🟠 **WARNING:**  
-> This script requires admin privileges ('**`sudo`**').
+> This script requires admin privileges ('**`sudo`**').  
 > This is normal and not dangerous.
-
-
 
 </details>
 
@@ -74,10 +75,12 @@ POSIBLES OPCIONES:
 `-w` - para conectarse vía WiFi\
 `-k` - para desconectarse\
 `-h` - para mostrar este mismo mensaje de ayuda\
-`-u` - para mostrar el manual de usuario
+`-u` - para mostrar el manual de usuario\
+`-i` - para instalar el ejucutable de WO Mic
 
-> 🟠 **ADVERTENCIA:**
-> Este script requiere el uso de privilegios administrativos ('**`sudo`**').
+
+> 🟠 **ADVERTENCIA:**  
+> Este script requiere el uso de privilegios administrativos ('**`sudo`**').  
 > Pero su uso no implica riesgo alguno.
 
 </details>
