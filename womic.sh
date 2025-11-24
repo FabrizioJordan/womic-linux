@@ -17,7 +17,9 @@ if [ $# -eq 0 ]; then
 fi
 
 
-if [ `ls | grep ^micclient-x86_64.*$` ]; then
+function executable_check() {
+	# checks if executable exists
+	if [ `ls | grep ^micclient-x86_64.*$` ]; then
 	    MICCLIENT=$(ls | grep ^micclient-x86_64.*$)
 	else
 	    printf "WO Mic Appimage binary not found! Would you like to download it now? (y/n): "
@@ -32,7 +34,6 @@ if [ `ls | grep ^micclient-x86_64.*$` ]; then
 	    fi
 	fi
 
-function executable_check() {
 	if ! [ -x $MICCLIENT ]; then
 	    chmod +x $MICCLIENT
 	fi
