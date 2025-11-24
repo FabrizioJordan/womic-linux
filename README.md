@@ -37,6 +37,12 @@ OPTIONS:
 `-h` - to show this help message\
 `-u` - to show the user manual
 
+> 🟠 **WARNING:**  
+> This script requires admin privileges ('**`sudo`**').
+> This is normal and not dangerous.
+
+
+
 </details>
 
 ---
@@ -70,5 +76,8 @@ POSIBLES OPCIONES:
 `-h` - para mostrar este mismo mensaje de ayuda\
 `-u` - para mostrar el manual de usuario
 
+> 🟠 **ADVERTENCIA:**
+> Este script requiere el uso de privilegios administrativos ('**`sudo`**').
+> Pero su uso no implica riesgo alguno.
 
 </details>
