@@ -41,12 +41,26 @@ function executable_check() {
 
 function download_executable() {
         printf "\n"
-        wget -q --show-progress https://wolicheng.com/womic/softwares/micclient-x86_64.AppImage
+        if [ `ls | grep ^micclient-x86_64.*$` ]; then
+	    	MICCLIENT=$(ls | grep ^micclient-x86_64.*$)
+	    	printf "WO Mic AppImage already exists. Do you want to download it again? (y/n): "
+	    	read INPUT
 
-        if [ $? -eq 1 ]; then
-            curl https://wolicheng.com/womic/softwares/micclient-x86_64.AppImage -o micclient-x86_64.AppImage
-        fi
+	    	if [ "$INPUT" == "y" ]; then
 
+			wget -q --show-progress https://wolicheng.com/womic/softwares/micclient-x86_64.AppImage
+
+	        	if [ $? -eq 1 ]; then
+	            		curl https://wolicheng.com/womic/softwares/micclient-x86_64.AppImage -o micclient-x86_64.AppImage
+	        	fi
+	        fi
+	else
+		wget -q --show-progress https://wolicheng.com/womic/softwares/micclient-x86_64.AppImage
+
+	        if [ $? -eq 1 ]; then
+	            	curl https://wolicheng.com/womic/softwares/micclient-x86_64.AppImage -o micclient-x86_64.AppImage
+	        fi
+	fi
         printf "\n"
 }
 
@@ -59,13 +73,14 @@ function module_check() {
 function how_to_use() {
 	printf "This is the User Manual\n\n"
 	printf "What do you want to know? "
-	printf "\n a) How to find Bluetooth address on my phone"
-	printf "\n b) How to find Wi-Fi address on my phone"
-	printf "\n c) What I need to connect my devices"
+	printf "\n b) How to find the Bluetooth address on your phone"
+	printf "\n w) How to find the Wi-Fi address on your phone"
+	printf "\n c) How to connect your devices"
+	printf "\n e) Exit the manual"
 	printf "\nOption: "
 	read LEARN
 	case $LEARN in
-		a)
+		b)
 			echo -e "\nHow to find your Bluetooth address: "
 			echo -e "\nOn iPhone: "
 			echo -e " Go to Settings \n Tap General \n Tap About \n Scroll down to the Bluetooth address"
@@ -81,7 +96,7 @@ function how_to_use() {
                 	echo -e " Example: a4:02:b1:b0:10:54"
                 	exit 0
 		;;
-		b)
+		w)
 			echo -e "\nHow to find your Wi-Fi address: "
 			echo -e "\nOn iPhone: "
 			echo -e " Go to Settings \n Tap General \n Tap About \n Scroll down to find the Wi-Fi address"
@@ -103,10 +118,14 @@ function how_to_use() {
 			echo -e " Run this script using '-b' (Bluetooth) or '-w' (for Wi-Fi)"
 		 	exit 0
 		;;
+		e)
+		 	echo -e "\nExiting"
+		 	exit 0
+		;;
 		*)
 		 	echo -e "\nInvalid option. Please run again and choose a valid one.\n"
 		 	exit 1
-		 ;;
+		;;
 	esac
 	exit 0
 }
@@ -173,7 +192,8 @@ while getopts "hbwkui" OPTION; do
 	 exit 0
 	 ;;
         *)
-         echo "\nRun 'womic -h' for help or 'womic -u' for the user manual"
+         echo ""
+         echo "Run 'womic -h' for help or 'womic -u' for the user manual"
          exit 0
          ;;
     esac
